@@ -13,5 +13,9 @@ Este repositorio contendrá la API REST para gestionar:
 ✅ Conexión a H2 Database para pruebas  
 ✅ Endpoint `/ping` de verificación
 
+## Diagrama de Clases (UML)
+![Diagrama UML](docs/diagrama-clases-uml.png)
+
+
 ---
 *README temporal - se actualizará con más detalles conforme avance el desarrollo.*

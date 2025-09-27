@@ -1,0 +1,176 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide circle
+
+' ======= Enumeraciones =======
+enum VehicleStatus {
+  DISPONIBLE
+  ALQUILADO
+  EN_MANTENIMIENTO
+}
+
+enum ReservationStatus {
+  PENDIENTE
+  CONFIRMADA
+  CANCELADA
+  FINALIZADA
+}
+
+enum PaymentStatus {
+  PENDIENTE
+  APROBADO
+  RECHAZADO
+  REEMBOLSADO
+}
+
+enum PaymentMethod {
+  TARJETA
+  EFECTIVO
+  TRANSFERENCIA
+}
+
+' ======= Value Object =======
+class DateRange {
+  - start: java.time.LocalDate
+  - end:   java.time.LocalDate
+  + DateRange(start, end)
+  + days(): long
+  + overlaps(other: DateRange): boolean
+}
+
+' ======= Inventario =======
+class Branch {
+  - id: java.util.UUID
+  - nombre: String
+  - direccion: String
+  - telefono: String
+}
+
+class VehicleType {
+  - id: java.util.UUID
+  - nombre: String
+  - capacidad: int
+  - transmision: String
+}
+
+class VehicleModel {
+  - id: java.util.UUID
+  - marca: String
+  - modelo: String
+  - anio: int
+}
+
+class Vehicle {
+  - id: java.util.UUID
+  - placa: String <<unique>>
+  - vin: String   <<unique>>
+  - status: VehicleStatus
+  - kilometraje: long
+  - color: String
+  - fechaAlta: java.time.LocalDate
+  + disponibleEn(rango: DateRange): boolean
+}
+
+class MaintenanceRecord {
+  - id: java.util.UUID
+  - fecha: java.time.LocalDate
+  - tipo: String
+  - descripcion: String
+  - costo: java.math.BigDecimal
+}
+
+' ======= Clientes y Reservas =======
+class Customer {
+  - id: java.util.UUID
+  - nombreCompleto: String
+  - email: String <<unique>>
+  - telefono: String
+  - licenciaConducir: String <<unique>>
+}
+
+class InsurancePlan {
+  - id: java.util.UUID
+  - nombre: String
+  - coberturaDescripcion: String
+  - costoDiario: java.math.BigDecimal
+}
+
+class Extra {
+  - id: java.util.UUID
+  - codigo: String <<unique>>
+  - nombre: String
+  - costoDiario: java.math.BigDecimal
+}
+
+class Reservation {
+  - id: java.util.UUID
+  - codigo: String <<unique>>
+  - rango: DateRange
+  - status: ReservationStatus
+  - notas: String
+  + duracionDias(): long
+  + importeEstimado(): java.math.BigDecimal
+  + confirmar(): void
+  + cancelar(motivo: String): void
+}
+
+class ReservationExtra {
+  - id: java.util.UUID
+  - cantidad: int
+  - costoUnitario: java.math.BigDecimal
+}
+
+class Payment {
+  - id: java.util.UUID
+  - metodo: PaymentMethod
+  - status: PaymentStatus
+  - monto: java.math.BigDecimal
+  - moneda: String
+  - fecha: java.time.OffsetDateTime
+  - referencia: String
+  + aprobar(): void
+  + rechazar(motivo: String): void
+  + reembolsar(motivo: String): void
+}
+
+class PricingRate {
+  - id: java.util.UUID
+  - fechaVigencia: java.time.LocalDate
+  - tarifaDiaria: java.math.BigDecimal
+}
+
+' ======= Relaciones =======
+Branch "1" o-- "0..*" Vehicle : alberga >
+Vehicle "1" o-- "0..*" MaintenanceRecord : registra >
+VehicleType "1" o-- "0..*" Vehicle : clasifica >
+VehicleModel "1" o-- "0..*" Vehicle : especifica >
+
+Customer "1" o-- "0..*" Reservation : realiza >
+Vehicle  "1" o-- "0..*" Reservation : asigna >
+
+Reservation "0..1" o-- "1" Payment : <<pago final>>
+Reservation "0..1" o-- "1" InsurancePlan : <<seguro opcional>>
+
+Reservation "1" o-- "0..*" ReservationExtra : <<N:M>>
+Extra "1" o-- "0..*" ReservationExtra
+
+VehicleType "1" o-- "0..*" PricingRate : tarifa por tipo
+Branch     "1" o-- "0..*" PricingRate : tarifa por sucursal
+
+' ======= Notas de invariantes =======
+note top of DateRange
+  Invariantes:
+   - start <= end
+   - overlaps(): true si [start..end] ∩ [other.start..other.end] ≠ ∅
+end note
+
+note top of Reservation
+  Reglas:
+   - confirmar():
+      * Vehicle.status != EN_MANTENIMIENTO
+      * No existe Reservation (CONFIRMADA/PENDIENTE)
+        del mismo Vehicle con rango.overlaps(...)
+end note
+
+@enduml
