@@ -14,8 +14,7 @@ Este repositorio contendrá la API REST para gestionar:
 ✅ Endpoint `/ping` de verificación
 
 ## Diagrama de Clases (UML)
-![Diagrama UML]("C:\Users\ferca\Desktop\sistema-alquiler-vehiculos-0.png")
-
+![Diagrama UML](docs/diagrama-clases-uml.png)
 
 ---
 *README temporal - se actualizará con más detalles conforme avance el desarrollo.*
