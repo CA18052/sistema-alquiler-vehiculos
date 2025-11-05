@@ -1,21 +1,29 @@
 # 🚗 Sistema de Alquiler de Vehículos
 
-Proyecto en desarrollo con **Spring Boot 3 y Java 17**.
+API REST desarrollada con **Spring Boot 3** y **Java 17** para gestionar un sistema simple de alquiler:
+- Vehículos (estado: DISPONIBLE, ALQUILADO, EN_MANTENIMIENTO)
+- Reservas (rango de fechas, validaciones básicas)
+- *Clientes y pagos están planificados para próximas entregas*
 
-Este repositorio contendrá la API REST para gestionar:
-- Vehículos (Disponibles, Alquilados, En Mantenimiento)
-- Clientes
-- Reservas por rango de fechas
-- Pagos y seguros opcionales
-
-## Estado actual
-✅ Proyecto inicializado en Spring Boot  
-✅ Conexión a H2 Database para pruebas  
-✅ Endpoint `/ping` de verificación
-
-## Diagrama de Clases (UML)
-![Diagrama UML](docs/diagrama-clases-uml.png)
-
+> **Entrega #2**: se incluye CRUD parcial para **vehículos** y **reservas**, uso de **DTOs**, **validaciones**, capa **service/repository**, **H2 en memoria**, y colección **Postman**.
 
 ---
-*README temporal - se actualizará con más detalles conforme avance el desarrollo.*
+
+## 🧰 Stack
+- Java 17
+- Spring Boot 3 (Web, Validation, Data JPA)
+- H2 Database (en memoria para dev)
+- Lombok
+- Maven Wrapper
+
+---
+
+## ▶️ Cómo ejecutar (local)
+Requisitos:
+- JDK 17 instalado
+
+Comandos:
+```bash
+# opción 1: desde IntelliJ, botón Run en SistemaDeAlquilerDeVehiculosApplication
+# opción 2: por terminal
+./mvnw spring-boot:run
