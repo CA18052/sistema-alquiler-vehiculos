@@ -16,5 +16,6 @@ Este repositorio contendrá la API REST para gestionar:
 ## Diagrama de Clases (UML)
 ![Diagrama UML](docs/diagrama-clases-uml.png)
 
+
 ---
 *README temporal - se actualizará con más detalles conforme avance el desarrollo.*
