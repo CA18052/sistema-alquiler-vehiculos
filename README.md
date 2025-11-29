@@ -1,29 +1,40 @@
-# 🚗 Sistema de Alquiler de Vehículos
+# 🚗 Sistema de Alquiler de Vehículos (SAV)
 
-API REST desarrollada con **Spring Boot 3** y **Java 17** para gestionar un sistema simple de alquiler:
-- Vehículos (estado: DISPONIBLE, ALQUILADO, EN_MANTENIMIENTO)
-- Reservas (rango de fechas, validaciones básicas)
-- *Clientes y pagos están planificados para próximas entregas*
-
-> **Entrega #2**: se incluye CRUD parcial para **vehículos** y **reservas**, uso de **DTOs**, **validaciones**, capa **service/repository**, **H2 en memoria**, y colección **Postman**.
+Este proyecto es un sistema de gestión para el alquiler de vehículos.  
+Permite administrar clientes, vehículos, alquileres y estados asociados.  
+Está construido con **Spring Boot**, utilizando buenas prácticas de arquitectura y capas bien definidas.
 
 ---
 
-## 🧰 Stack
-- Java 17
-- Spring Boot 3 (Web, Validation, Data JPA)
-- H2 Database (en memoria para dev)
-- Lombok
-- Maven Wrapper
+## 📌 Características principales
 
----
+- Gestión de vehículos (CRUD).
+- Gestión de clientes.
+- Gestión de alquileres.
+- Uso de DTOs y mappers para separar la lógica de dominio.
+- Arquitectura en capas: Controller → Service → Repository.
+- Persistencia con Spring Data JPA.
+- Pruebas unitarias con **JUnit 5** y **Mockito**.
 
-## ▶️ Cómo ejecutar (local)
-Requisitos:
-- JDK 17 instalado
+## 🏗️ Arquitectura del Proyecto
 
-Comandos:
-```bash
-# opción 1: desde IntelliJ, botón Run en SistemaDeAlquilerDeVehiculosApplication
-# opción 2: por terminal
-./mvnw spring-boot:run
+El proyecto sigue una arquitectura en capas:
+- Controlador
+- Servicio
+- Entidad
+- Repositorio
+
+🚀 Cómo ejecutar el proyecto
+
+--Clonar el repositorio
+
+git clone https://github.com/usuario/sistema-alquiler-vehiculos.git
+cd sistema-alquiler-vehiculo
+
+--Ejecutar con Maven
+
+mvn spring-boot:run
+
+--Acceder a la aplicación
+
+http://localhost:8080
