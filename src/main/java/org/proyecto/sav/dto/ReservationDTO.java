@@ -16,5 +16,7 @@ public record ReservationDTO(
         LocalDate startDate,
 
         @NotNull(message = "endDate es obligatoria")
-        LocalDate endDate
+        LocalDate endDate,
+
+        Long paymentId
 ) {}

@@ -25,4 +25,12 @@ public class ReservationController {
     public ResponseEntity<ReservationDTO> create(@RequestBody @Valid ReservationDTO dto) {
         return ResponseEntity.ok(reservationService.create(dto));
     }
+
+    @PutMapping("/{reservationId}/payment/{paymentId}")
+    public ResponseEntity<ReservationDTO> assignPayment(
+            @PathVariable Long reservationId,
+            @PathVariable Long paymentId) {
+        return ResponseEntity.ok(reservationService.assignPayment(reservationId, paymentId));
+    }
+
 }

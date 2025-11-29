@@ -3,9 +3,11 @@ package org.proyecto.sav.service;
 import lombok.RequiredArgsConstructor;
 import org.proyecto.sav.dto.ReservationDTO;
 import org.proyecto.sav.mapper.ReservationMapper;
+import org.proyecto.sav.model.Payment;
 import org.proyecto.sav.model.Reservation;
 import org.proyecto.sav.model.Vehicle;
 import org.proyecto.sav.model.VehicleStatus;
+import org.proyecto.sav.repository.PaymentRepository;
 import org.proyecto.sav.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final VehicleService vehicleService;
+    private final PaymentRepository paymentRepository;
+
 
     @Transactional(readOnly = true)
     public List<ReservationDTO> list() {
@@ -53,4 +57,19 @@ public class ReservationService {
         );
         return ReservationMapper.toDTO(saved);
     }
+
+    @Transactional
+    public ReservationDTO assignPayment(Long reservationId, Long paymentId) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new RuntimeException("Payment not found"));
+
+        reservation.setPayment(payment);
+        Reservation saved = reservationRepository.save(reservation);
+
+        return ReservationMapper.toDTO(saved);
+    }
+
 }
