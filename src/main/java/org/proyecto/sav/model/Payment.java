@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "payments")
+@Table(name = "payment")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @Builder
@@ -19,7 +19,7 @@ public class Payment {
     //metodo de pago (tarjeta, efectivo)
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PaymentMethod method;
+    private PaymentMethod metodo;
 
     //estado del pago (pendiente, aprobado)
     @Enumerated(EnumType.STRING)
@@ -28,18 +28,18 @@ public class Payment {
 
     //monto pagado
     @Column(nullable = false)
-    private BigDecimal amount;
+    private BigDecimal monto;
 
     //moneda del pago
     @Column(nullable = false)
-    private String currency;
+    private String moneda;
 
     //fecha y hora del pago
 
-    private OffsetDateTime date;
+    private OffsetDateTime fecha;
 
     //referencia del pago (numero de transaccion)
     @Column(nullable = false, unique = true)
-    private String reference;
+    private String referencia;
 
 }
