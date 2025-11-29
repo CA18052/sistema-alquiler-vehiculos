@@ -59,4 +59,12 @@ public class Reservation {
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReservationExtra> extras;
 
+    @Column(nullable = false)
+    private LocalDate endDate;
+
+    //relacion de uno a uno con Payment
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+
 }
