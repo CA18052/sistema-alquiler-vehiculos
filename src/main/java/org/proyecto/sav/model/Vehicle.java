@@ -16,15 +16,27 @@ public class Vehicle {
 
     // Placa única para ubicar el carro rápidamente
     @Column(nullable = false, unique = true, length = 20)
-    private String plate;
+    private String placa;
+
+    // vin unico
+    @Column(nullable = false, unique = true,length = 50)
+    private String vin;
+
+    @Column(nullable = false)
+    private Long kilometraje;
 
     @Column(nullable = false, length = 50)
-    private String brand;
-
-    @Column(nullable = false, length = 50)
-    private String model;
+    private String color;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private VehicleStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_model_id", nullable = false)
+    private VehicleModel vehicleModel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "branch_id", nullable = false)
+    private Branch branch;
 }
