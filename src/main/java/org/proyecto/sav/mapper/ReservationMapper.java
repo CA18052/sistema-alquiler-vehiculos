@@ -11,7 +11,8 @@ public class ReservationMapper {
                 r.getId(),
                 r.getVehicle().getId(),
                 r.getStartDate(),
-                r.getEndDate()
+                r.getEndDate(),
+                r.getPayment() != null ? r.getPayment().getId() : null
         );
     }
 
